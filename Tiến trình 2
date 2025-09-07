@@ -1,0 +1,49 @@
+//-Tiến trình 2: Cấu hình 1 LED ở chế độ Output và 1 nút nhấn ở chế độ Input, LED thay đổi trạng thái mỗi lần người dùng nhấn nút."
+// code:
+#include "stm32f10x.h"
+#include "stm32f10x_gpio.h"
+#include "stm32f10x_rcc.h"
+
+void cauhinh(void);
+void Delay_ms(int time);
+
+int main(void){
+    cauhinh();
+    uint8_t led = 0;
+
+    while(1){
+        if(GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_1) == 0) {
+            Delay_ms(20);
+            if(GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_1) == 0) {
+                led =! led;
+                if(led){
+                    GPIO_SetBits(GPIOA, GPIO_Pin_0);  
+                } else {
+                    GPIO_ResetBits(GPIOA, GPIO_Pin_0);
+                }
+                while(GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_1) == 0);
+            }
+        }
+    }
+}
+
+void cauhinh(void){
+    GPIO_InitTypeDef gpio;
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
+
+    gpio.GPIO_Pin = GPIO_Pin_0;
+    gpio.GPIO_Mode = GPIO_Mode_Out_PP;
+    gpio.GPIO_Speed = GPIO_Speed_50MHz;
+    GPIO_Init(GPIOA, &gpio);
+
+    gpio.GPIO_Pin = GPIO_Pin_1;
+    gpio.GPIO_Mode = GPIO_Mode_IPU;
+    GPIO_Init(GPIOA, &gpio);
+}
+
+void Delay_ms(int time){
+    int i, j;
+    for(i = 0; i < time; i++){
+        for(j = 0; j < 0x2AFF; j++);
+    }
+}

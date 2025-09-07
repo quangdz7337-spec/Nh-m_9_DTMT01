@@ -21,7 +21,7 @@ Cài đặt phần mềm ,công cụ lập trình cho STM32F1 và Blinking LED
 -Button: PA1
 ## Quan sát:
 * Tiến trình 1
-   - LED1 và LED2 nhấp nháy luân phiên mỗi 1 giây.
+   - LED1 và LED2 nhấp nháy mỗi 1 giây.
 * Tiến trình 2
    - LED sáng tắt tuỳ theo lần nhấn nút
    - Button khi bạn nhấn nút lần 1 LED sáng nhấn nút lần 2 LED tắt delay mỗi lần nhấn để led đổi chế độ 20ms.
